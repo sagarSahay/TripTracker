@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TripTracker.UI.Data;
 using TripTracker.UI.Services;
+using System.Net.Http;
 
 namespace TripTracker.UI
 {
@@ -32,6 +33,16 @@ namespace TripTracker.UI
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+    #region API client configuration
+
+            var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(Configuration["serviceUrl"])
+            };
+
+            services.AddSingleton(httpClient);
+            services.AddSingleton<IApiClient, ApiClient>();
+    #endregion
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
