@@ -26,15 +26,32 @@ namespace TripTracker.BackService.Controllers
         {
             var trips = await context.Trips
                 .AsNoTracking()
+                .Include(t => t.Segments)
+                .Select(t => new TripWithSegments
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    Segments = t.Segments
+                })
                 .ToListAsync();
+
             return Ok(trips);
         }
 
         // GET api/trips/5
         [HttpGet("{id}")]
-        public Trip Get(int id)
+        public TripWithSegments Get(int id)
         {
-            return context.Trips.Find(id);
+            return context.Trips.Select(t => new TripWithSegments
+            {
+                Id = t.Id,
+                Name = t.Name,
+                StartDate = t.StartDate,
+                EndDate = t.EndDate,
+                Segments = t.Segments
+            }).SingleOrDefault(t => t.Id == id);
         }
 
         // POST api/trips
