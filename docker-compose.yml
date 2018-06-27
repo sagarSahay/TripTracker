@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  triptracker.ui:
+    image: triptrackerui
+    build:
+      context: .
+      dockerfile: TripTracker.UI/Dockerfile
