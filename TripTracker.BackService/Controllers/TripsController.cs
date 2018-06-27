@@ -33,7 +33,7 @@ namespace TripTracker.BackService.Controllers
                     Name = t.Name,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
-                    Segments = t.Segments
+                    Segments = t.Segments.ToList<TripTrackerDTO.Segment>()
                 })
                 .ToListAsync();
 
@@ -50,13 +50,13 @@ namespace TripTracker.BackService.Controllers
                 Name = t.Name,
                 StartDate = t.StartDate,
                 EndDate = t.EndDate,
-                Segments = t.Segments
+                Segments = t.Segments.ToList<TripTrackerDTO.Segment>()
             }).SingleOrDefault(t => t.Id == id);
         }
 
         // POST api/trips
         [HttpPost]
-        public IActionResult Post([FromBody]Trip value)
+        public IActionResult Post([FromBody]Models.Trip value)
         {
             if (!ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace TripTracker.BackService.Controllers
 
         // PUT api/trips/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody]Trip value)
+        public async Task<IActionResult> PutAsync(int id, [FromBody]Models.Trip value)
         {
             if (context.Trips.Any(t => t.Id == id))
             {
