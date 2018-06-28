@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using TripTracker.BackService.Models;
 using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
@@ -19,36 +20,36 @@ namespace TripTracker.UI.Pages.Trips
         }
 
         [BindProperty]
-        public ApplicationUser ApplicationUser { get; set; }
+        public Trip Trip { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            ApplicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+            Trip = await _context.Trip.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (ApplicationUser == null)
+            if (Trip == null)
             {
                 return NotFound();
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            ApplicationUser = await _context.ApplicationUser.FindAsync(id);
+            Trip = await _context.Trip.FindAsync(id);
 
-            if (ApplicationUser != null)
+            if (Trip != null)
             {
-                _context.ApplicationUser.Remove(ApplicationUser);
+                _context.Trip.Remove(Trip);
                 await _context.SaveChangesAsync();
             }
 

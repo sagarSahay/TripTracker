@@ -14,94 +14,28 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].UserName)
+                    @Html.DisplayNameFor(model => model.Trip[0].Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].NormalizedUserName)
+                    @Html.DisplayNameFor(model => model.Trip[0].StartDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].NormalizedEmail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].EmailConfirmed)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].PasswordHash)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].SecurityStamp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].ConcurrencyStamp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].PhoneNumberConfirmed)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].TwoFactorEnabled)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].LockoutEnd)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].LockoutEnabled)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApplicationUser[0].AccessFailedCount)
+                    @Html.DisplayNameFor(model => model.Trip[0].EndDate)
                 </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ApplicationUser) {
+@foreach (var item in Model.Trip) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NormalizedUserName)
+                @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NormalizedEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailConfirmed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SecurityStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LockoutEnd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LockoutEnabled)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessFailedCount)
+                @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

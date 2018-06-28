@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using TripTracker.BackService.Models;
 using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
@@ -18,18 +19,18 @@ namespace TripTracker.UI.Pages.Trips
             _context = context;
         }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public Trip Trip { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            ApplicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+            Trip = await _context.Trip.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (ApplicationUser == null)
+            if (Trip == null)
             {
                 return NotFound();
             }

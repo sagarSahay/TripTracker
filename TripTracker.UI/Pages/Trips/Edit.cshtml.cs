@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TripTracker.BackService.Models;
 using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
@@ -20,18 +21,18 @@ namespace TripTracker.UI.Pages.Trips
         }
 
         [BindProperty]
-        public ApplicationUser ApplicationUser { get; set; }
+        public Trip Trip { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            ApplicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+            Trip = await _context.Trip.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (ApplicationUser == null)
+            if (Trip == null)
             {
                 return NotFound();
             }
@@ -45,7 +46,7 @@ namespace TripTracker.UI.Pages.Trips
                 return Page();
             }
 
-            _context.Attach(ApplicationUser).State = EntityState.Modified;
+            _context.Attach(Trip).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +54,7 @@ namespace TripTracker.UI.Pages.Trips
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ApplicationUserExists(ApplicationUser.Id))
+                if (!TripExists(Trip.Id))
                 {
                     return NotFound();
                 }
@@ -66,9 +67,9 @@ namespace TripTracker.UI.Pages.Trips
             return RedirectToPage("./Index");
         }
 
-        private bool ApplicationUserExists(string id)
+        private bool TripExists(int id)
         {
-            return _context.ApplicationUser.Any(e => e.Id == id);
+            return _context.Trip.Any(e => e.Id == id);
         }
     }
 }

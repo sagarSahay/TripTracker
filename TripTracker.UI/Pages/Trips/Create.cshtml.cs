@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TripTracker.BackService.Models;
 using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
@@ -24,7 +25,7 @@ namespace TripTracker.UI.Pages.Trips
         }
 
         [BindProperty]
-        public ApplicationUser ApplicationUser { get; set; }
+        public Trip Trip { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -33,7 +34,7 @@ namespace TripTracker.UI.Pages.Trips
                 return Page();
             }
 
-            _context.ApplicationUser.Add(ApplicationUser);
+            _context.Trip.Add(Trip);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
