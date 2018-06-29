@@ -15,6 +15,8 @@ namespace TripTracker.UI.Services
         Task PutTripsAsync(Trip tripToUpdate);
 
         Task AddTripAsync(Trip tripToAdd);
+
+        Task RemoveTripAsync(int id);
     }
 
     public class ApiClient : IApiClient
@@ -29,6 +31,13 @@ namespace TripTracker.UI.Services
         public async Task AddTripAsync(Trip tripToAdd)
         {
             var response = await httpClient.PostJsonAsync("/api/Trips", tripToAdd);
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task RemoveTripAsync(int id)
+        {
+            var response = await httpClient.DeleteAsync($"/api/Trips/{id}");
 
             response.EnsureSuccessStatusCode();
         }

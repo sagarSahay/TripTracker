@@ -10,13 +10,16 @@ using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
 {
+    using Services;
+
     public class DetailsModel : PageModel
     {
-        private readonly TripTracker.UI.Data.ApplicationDbContext _context;
+        private IApiClient context;
 
-        public DetailsModel(TripTracker.UI.Data.ApplicationDbContext context)
+
+        public DetailsModel(IApiClient context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public Trip Trip { get; set; }
@@ -28,7 +31,7 @@ namespace TripTracker.UI.Pages.Trips
                 return NotFound();
             }
 
-            Trip = await _context.Trip.SingleOrDefaultAsync(m => m.Id == id);
+            Trip = await context.GetTripAsync(id.Value);
 
             if (Trip == null)
             {

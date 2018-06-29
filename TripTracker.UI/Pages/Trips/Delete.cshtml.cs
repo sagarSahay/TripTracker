@@ -10,13 +10,15 @@ using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
 {
+    using Services;
+
     public class DeleteModel : PageModel
     {
-        private readonly TripTracker.UI.Data.ApplicationDbContext _context;
+        private IApiClient context;
 
-        public DeleteModel(TripTracker.UI.Data.ApplicationDbContext context)
+        public DeleteModel(IApiClient context)
         {
-            _context = context;
+            this.context = context;
         }
 
         [BindProperty]
@@ -29,7 +31,7 @@ namespace TripTracker.UI.Pages.Trips
                 return NotFound();
             }
 
-            Trip = await _context.Trip.SingleOrDefaultAsync(m => m.Id == id);
+            Trip = await context.GetTripAsync(id.Value);
 
             if (Trip == null)
             {
@@ -45,13 +47,7 @@ namespace TripTracker.UI.Pages.Trips
                 return NotFound();
             }
 
-            Trip = await _context.Trip.FindAsync(id);
-
-            if (Trip != null)
-            {
-                _context.Trip.Remove(Trip);
-                await _context.SaveChangesAsync();
-            }
+            await context.RemoveTripAsync(id.Value);
 
             return RedirectToPage("./Index");
         }

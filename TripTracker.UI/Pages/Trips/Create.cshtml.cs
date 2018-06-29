@@ -10,13 +10,15 @@ using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
 {
+    using Services;
+
     public class CreateModel : PageModel
     {
-        private readonly TripTracker.UI.Data.ApplicationDbContext _context;
+        private IApiClient context;
 
-        public CreateModel(TripTracker.UI.Data.ApplicationDbContext context)
+        public CreateModel(IApiClient context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public IActionResult OnGet()
@@ -34,8 +36,9 @@ namespace TripTracker.UI.Pages.Trips
                 return Page();
             }
 
-            _context.Trip.Add(Trip);
-            await _context.SaveChangesAsync();
+            //_context.Trip.Add(Trip);
+            //await _context.SaveChangesAsync();
+            await context.AddTripAsync(Trip);
 
             return RedirectToPage("./Index");
         }
