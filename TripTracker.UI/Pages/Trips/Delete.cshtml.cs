@@ -47,7 +47,12 @@ namespace TripTracker.UI.Pages.Trips
                 return NotFound();
             }
 
-            await context.RemoveTripAsync(id.Value);
+            Trip = await context.GetTripAsync(id.Value);
+
+            if (Trip != null)
+            {
+                await context.RemoveTripAsync(id.Value);
+            }
 
             return RedirectToPage("./Index");
         }
