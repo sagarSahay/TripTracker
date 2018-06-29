@@ -33,16 +33,22 @@ namespace TripTracker.UI
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-    #region API client configuration
+            #region API client configuration
 
-            var httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(Configuration["serviceUrl"])
-            };
+            //var httpClient = new HttpClient
+            //{
+            //    BaseAddress = new Uri(Configuration["serviceUrl"])
+            //};
 
-            services.AddSingleton(httpClient);
-            services.AddSingleton<IApiClient, ApiClient>();
-    #endregion
+            services.AddScoped(_ =>
+                new HttpClient
+                {
+                    BaseAddress = new Uri(Configuration["serviceUrl"])
+                });
+            services.AddScoped<IApiClient, ApiClient>();
+
+            // services.AddSingleton<IApiClient, ApiClient>();
+            #endregion
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>

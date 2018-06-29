@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using TripTracker.BackService.Models;
-using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
 {
+    using Services;
+
     public class IndexModel : PageModel
     {
-        private readonly TripTracker.UI.Data.ApplicationDbContext _context;
+        private readonly IApiClient client;
 
-        public IndexModel(TripTracker.UI.Data.ApplicationDbContext context)
+        public IndexModel(IApiClient client)
         {
-            _context = context;
+            this.client = client;
         }
 
         public IList<Trip> Trip { get;set; }
 
         public async Task OnGetAsync()
         {
-            Trip = await _context.Trip.ToListAsync();
+            Trip = await client.GetTripsAsync();
         }
     }
 }

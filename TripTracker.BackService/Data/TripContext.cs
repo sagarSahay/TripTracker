@@ -20,9 +20,6 @@
             
         }
 
-        public TripContext(DbContextOptions options) : base(options)
-        {
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Trip>().HasKey(t => t.Id);
