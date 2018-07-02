@@ -1,5 +1,8 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @model TripTracker.UI.Pages.Trips.IndexModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService Auth
 
 @{
     ViewData["Title"] = "Index";
@@ -7,42 +10,52 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+@if (await Auth.AuthorizeAsync(User, null, "CreateTrips") == AuthorizationResult.Success()) //(SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Trip[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Trip[0].StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Trip[0].EndDate)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trip[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trip[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trip[0].EndDate)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Trip) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Trip)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> @:|
+    }
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -51,11 +51,16 @@ namespace TripTracker.UI
             #endregion
 
             services.AddMvc()
-                .AddRazorPagesOptions(options =>
+                .AddRazorPagesOptions(Security.Configure);
+
+            services.AddAuthorization(configure =>
+            {
+                configure.AddPolicy("CreateTrips", policy =>
                 {
-                    options.Conventions.AuthorizeFolder("/Account/Manage");
-                    options.Conventions.AuthorizePage("/Account/Logout");
+                    policy.RequireUserName("sagar@parcelvision.com")
+                        .Build();
                 });
+            });
 
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713

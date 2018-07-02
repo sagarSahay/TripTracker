@@ -10,8 +10,10 @@ using TripTracker.UI.Data;
 
 namespace TripTracker.UI.Pages.Trips
 {
+    using Microsoft.AspNetCore.Authorization;
     using Services;
 
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private IApiClient context;

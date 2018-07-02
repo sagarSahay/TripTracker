@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TripTracker.UI.Data;
-using TripTracker.BackService.Models;
 
 namespace TripTracker.UI.Data
 {
@@ -25,7 +19,5 @@ namespace TripTracker.UI.Data
         }
 
         public DbSet<TripTracker.UI.Data.ApplicationUser> ApplicationUser { get; set; }
-
-        public DbSet<TripTracker.BackService.Models.Trip> Trip { get; set; }
     }
 }

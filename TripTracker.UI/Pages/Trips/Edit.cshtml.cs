@@ -5,8 +5,10 @@ using TripTracker.BackService.Models;
 
 namespace TripTracker.UI.Pages.Trips
 {
+    using Microsoft.AspNetCore.Authorization;
     using Services;
 
+    [Authorize]
     public class EditModel : PageModel
     {
         private IApiClient context;
