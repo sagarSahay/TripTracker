@@ -10,7 +10,7 @@
 
 <h2>Index</h2>
 
-@if (await Auth.AuthorizeAsync(User, null, "CreateTrips") == AuthorizationResult.Success()) //(SignInManager.IsSignedIn(User))
+@if ((await Auth.AuthorizeAsync(User, null, "CreateTrips")).Succeeded) //(SignInManager.IsSignedIn(User))
 {
     <p>
         <a asp-page="Create">Create New</a>

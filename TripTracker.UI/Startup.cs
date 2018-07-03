@@ -57,8 +57,7 @@ namespace TripTracker.UI
             {
                 configure.AddPolicy("CreateTrips", policy =>
                 {
-                    policy.RequireUserName("sagar@parcelvision.com")
-                        .Build();
+                    policy.RequireAuthenticatedUser().Build();
                 });
             });
 
@@ -85,7 +84,14 @@ namespace TripTracker.UI
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            //app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "areaRoute",
+                    template: "{area:exists}/{controller=Home}/{Action=Index}/{Id?}");
+            });
         }
     }
 }
